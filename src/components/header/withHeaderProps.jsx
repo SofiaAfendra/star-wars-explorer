@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback } from "react";
 import PropTypes from "prop-types";
 
 export const withHeaderProps = (WrappedComponent) => {
@@ -7,8 +7,6 @@ export const withHeaderProps = (WrappedComponent) => {
 
     const [option, setOption] = useState("people");
     const [searchText, setSearchText] = useState("");
-    const prevOptionRef = useRef();
-    const prevSearchTextRef = useRef();
 
     const handleChange = (event) => {
       setOption(event.target.value);
@@ -23,8 +21,6 @@ export const withHeaderProps = (WrappedComponent) => {
       clearSearchResults();
       fetchSearchResults({ option, searchText, page: "1" });
       setFilters({ option, searchText });
-      prevOptionRef.current = option;
-      prevSearchTextRef.current = searchText;
     }, [
       clearSearchResults,
       fetchSearchResults,
@@ -37,9 +33,6 @@ export const withHeaderProps = (WrappedComponent) => {
       <WrappedComponent
         {...props}
         option={option}
-        searchText={searchText}
-        prevOptionRef={prevOptionRef}
-        prevSearchTextRef={prevSearchTextRef}
         handleChange={handleChange}
         handleSearch={handleSearch}
         handleClick={handleClick}

@@ -1,7 +1,6 @@
 import { StrictMode } from "react";
 import { Provider } from "react-redux";
 import { GlobalStyles, CssBaseline } from "@mui/material";
-import { Snackbar } from "../snackbar";
 import { store } from "../../store";
 import PropTypes from "prop-types";
 
@@ -16,7 +15,6 @@ const UISetup = ({ children }) => (
         }}
       />
       <CssBaseline />
-      <Snackbar />
       {children}
     </Provider>
   </StrictMode>
