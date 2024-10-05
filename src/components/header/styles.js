@@ -18,4 +18,5 @@ export default {
     alignItems: "center",
     gap: "1em",
   },
+  select: { minWidth: "120px" },
 };

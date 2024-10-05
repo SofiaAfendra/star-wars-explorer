@@ -36,17 +36,18 @@ const Header = ({
   handleSearch,
   handleClick,
 }) => {
+  console.log(
+    prevOptionRef.current === option,
+    prevSearchTextRef.current === searchText
+  );
+
   return (
     <Box component="header" sx={styles.header}>
       <Typography variant="h1" align="center" sx={styles.heading}>
         Star Wars Explorer
       </Typography>
       <Box component="section" sx={styles.filters}>
-        <Select
-          sx={{ minWidth: "120px" }}
-          value={option}
-          onChange={handleChange}
-        >
+        <Select sx={styles.select} value={option} onChange={handleChange}>
           {OPTIONS_LIST.map((option) => (
             <MenuItem key={option} value={option}>
               {option}

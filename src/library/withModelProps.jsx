@@ -1,4 +1,4 @@
-import { memo, useMemo } from "react";
+import { useMemo } from "react";
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import { bindActionCreators } from "redux";
 
@@ -42,6 +42,5 @@ export const withModelProps = (props) => (WrappedComponent) => {
     );
   };
 
-  // This prevents unnecessary re-renders of components in case the parent component re-renders
-  return memo(EnhancedComponent);
+  return EnhancedComponent;
 };

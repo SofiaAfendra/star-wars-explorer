@@ -1,10 +1,10 @@
 import { useCallback } from "react";
 import PropTypes from "prop-types";
-import { Box, Typography, Button, Skeleton, IconButton } from "@mui/material";
+import { Box, Button, Skeleton, IconButton } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Virtuoso } from "react-virtuoso";
-import { Header } from "./components";
+import { Header, Main } from "./components";
 import {
   fetchSearchResults,
   nameListSelector,
@@ -38,7 +38,6 @@ function App({
   searchResultsCountSelector,
   nextPageSelector,
   setSelectedResult,
-  selectedResultSelector,
   searchingSelector,
   addFavorite,
   searchResultsSelector,
@@ -49,7 +48,6 @@ function App({
   favoritesCountSelector,
   favoritesSelector,
   setSelectedFavorite,
-  selectedFavoriteSelector,
   filtersSelector: { option, searchText },
 }) {
   const loadMore = useCallback(() => {
@@ -68,27 +66,7 @@ function App({
   return (
     <Box component="section" sx={styles.root}>
       <Header />
-      <Box component="main" sx={styles.main}>
-        {showFavoritesSelector ? (
-          selectedFavoriteSelector ? (
-            Object.entries(selectedFavoriteSelector).map(([key, value]) => (
-              <Typography key={key}>
-                {key}: {value}
-              </Typography>
-            ))
-          ) : (
-            <Typography>May the force be with you!</Typography>
-          )
-        ) : selectedResultSelector ? (
-          Object.entries(selectedResultSelector).map(([key, value]) => (
-            <Typography key={key}>
-              {key}: {value}
-            </Typography>
-          ))
-        ) : (
-          <Typography>May the force be with you!</Typography>
-        )}
-      </Box>
+      <Main />
       <Box component="aside" sx={styles.sidebar}>
         {searchingSelector && nameListSelector.length === 0 ? (
           Array(10)
@@ -150,9 +128,7 @@ function App({
           />
         )}
       </Box>
-      <Box component="footer" sx={styles.footer}>
-        This is the footer
-      </Box>
+      <Box component="footer" sx={styles.footer} />
     </Box>
   );
 }
