@@ -1,4 +1,2 @@
-- refactor
-- styling
 - mobile view
 - documentation

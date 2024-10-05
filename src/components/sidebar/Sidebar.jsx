@@ -1,6 +1,6 @@
 import { compose } from "@reduxjs/toolkit";
 import PropTypes from "prop-types";
-import { Box, Button, Skeleton, IconButton } from "@mui/material";
+import { Box, Typography, Skeleton, IconButton } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Virtuoso } from "react-virtuoso";
@@ -15,6 +15,7 @@ import {
   searchingSelector,
   searchResultsSelector,
   filtersSelector,
+  selectedResultIndexSelector,
 } from "../../models/search-results";
 import {
   showFavoritesSelector,
@@ -25,6 +26,7 @@ import {
   favoritesSelector,
   addFavorite,
   removeFavorite,
+  selectedFavoriteIndexSelector,
 } from "../../models/favorites";
 import styles from "./styles";
 
@@ -37,6 +39,7 @@ const Sidebar = ({
   showSkeleton,
   totalCount,
   getNameList,
+  isSelected,
 }) => (
   <Box component="aside" sx={styles.sidebar}>
     {showSkeleton ? (
@@ -50,22 +53,20 @@ const Sidebar = ({
         style={styles.list}
         totalCount={totalCount}
         itemContent={(index) => (
-          <>
-            <Button
-              type="button"
-              sx={styles.listItem}
-              onClick={() => handleLinkClick(index)}
-            >
-              {getNameList(index)}
-            </Button>
-            <IconButton onClick={() => handleFavoriteClick(index)}>
+          <Box
+            onClick={() => handleLinkClick(index)}
+            component="section"
+            sx={[styles.listItem, isSelected(index) && styles.selected]}
+          >
+            <Typography>{getNameList(index)}</Typography>
+            <IconButton onClick={(e) => handleFavoriteClick(e, index)}>
               {isFavoriteSelector(getItemName(index)) ? (
                 <FavoriteIcon />
               ) : (
                 <FavoriteBorderIcon />
               )}
             </IconButton>
-          </>
+          </Box>
         )}
         endReached={loadMore}
       />
@@ -97,6 +98,9 @@ Sidebar.propTypes = {
   showSkeleton: PropTypes.bool.isRequired,
   totalCount: PropTypes.number.isRequired,
   getNameList: PropTypes.func.isRequired,
+  selectedFavoriteIndexSelector: PropTypes.number,
+  selectedResultIndexSelector: PropTypes.number,
+  isSelected: PropTypes.func.isRequired,
 };
 
 const ComposedSidebar = compose(
@@ -117,6 +121,8 @@ const ComposedSidebar = compose(
     favoritesSelector,
     setSelectedFavorite,
     filtersSelector,
+    selectedFavoriteIndexSelector,
+    selectedResultIndexSelector,
   }),
   withSidebarProps
 )(Sidebar);

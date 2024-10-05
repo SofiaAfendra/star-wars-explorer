@@ -8,31 +8,30 @@ import {
 } from "../../models/favorites";
 import styles from "./styles";
 
+const renderContent = (selector) => {
+  if (selector) {
+    return Object.entries(selector).map(([key, value]) => (
+      <Box key={key} component="section" sx={styles.container}>
+        <Typography sx={styles.key}>{key}</Typography>
+        <Typography sx={styles.value}>{value}</Typography>
+      </Box>
+    ));
+  } else {
+    return (
+      <Typography sx={styles.helperText}>May the force be with you!</Typography>
+    );
+  }
+};
+
 const Main = ({
   showFavoritesSelector,
   selectedFavoriteSelector,
   selectedResultSelector,
 }) => (
   <Box component="main" sx={styles.main}>
-    {showFavoritesSelector ? (
-      selectedFavoriteSelector ? (
-        Object.entries(selectedFavoriteSelector).map(([key, value]) => (
-          <Typography key={key}>
-            {key}: {value}
-          </Typography>
-        ))
-      ) : (
-        <Typography>May the force be with you!</Typography>
-      )
-    ) : selectedResultSelector ? (
-      Object.entries(selectedResultSelector).map(([key, value]) => (
-        <Typography key={key}>
-          {key}: {value}
-        </Typography>
-      ))
-    ) : (
-      <Typography>May the force be with you!</Typography>
-    )}
+    {showFavoritesSelector
+      ? renderContent(selectedFavoriteSelector)
+      : renderContent(selectedResultSelector)}
   </Box>
 );
 Main.propTypes = {

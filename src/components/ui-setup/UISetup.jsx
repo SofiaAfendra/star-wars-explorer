@@ -11,6 +11,8 @@ const UISetup = ({ children }) => (
         styles={{
           body: {
             margin: 0,
+            padding: 0,
+            boxSizing: "border-box",
           },
         }}
       />

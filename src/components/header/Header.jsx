@@ -38,7 +38,12 @@ const Header = ({
       Star Wars Explorer
     </Typography>
     <Box component="section" sx={styles.filters}>
-      <Select sx={styles.select} value={option} onChange={handleChange}>
+      <Select
+        size="small"
+        value={option}
+        onChange={handleChange}
+        sx={styles.select}
+      >
         {OPTIONS_LIST.map((option) => (
           <MenuItem key={option} value={option}>
             {option}
@@ -46,6 +51,8 @@ const Header = ({
         ))}
       </Select>
       <TextField
+        size="small"
+        placeholder="Optional Search Term"
         slotProps={{
           input: {
             endAdornment: <SearchIcon />,

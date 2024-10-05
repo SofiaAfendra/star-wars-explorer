@@ -5,6 +5,7 @@ export default {
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
+    p: 2,
   },
   heading: {
     fontStyle: "italic",
@@ -16,7 +17,6 @@ export default {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    gap: "1em",
+    gap: 2,
   },
-  select: { minWidth: "120px" },
 };

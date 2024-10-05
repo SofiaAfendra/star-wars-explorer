@@ -20,6 +20,8 @@ export const withSidebarProps = (WrappedComponent) => {
       searchResultsCountSelector,
       favoritesCountSelector,
       favoriteNameListSelector,
+      selectedFavoriteIndexSelector,
+      selectedResultIndexSelector,
     } = props;
 
     const showSkeleton = searchingSelector && nameListSelector.length === 0;
@@ -80,16 +82,30 @@ export const withSidebarProps = (WrappedComponent) => {
     );
 
     const handleFavoriteClick = useCallback(
-      (index) =>
+      (event, index) => {
+        event.stopPropagation();
         isFavoriteSelector(getItemName(index))
           ? removeFavorite(getListItem(index))
-          : addFavorite(getListItem(index)),
+          : addFavorite(getListItem(index));
+      },
       [
         addFavorite,
         getListItem,
         isFavoriteSelector,
         removeFavorite,
         getItemName,
+      ]
+    );
+
+    const isSelected = useCallback(
+      (index) =>
+        showFavoritesSelector
+          ? index === selectedFavoriteIndexSelector
+          : index === selectedResultIndexSelector,
+      [
+        selectedFavoriteIndexSelector,
+        selectedResultIndexSelector,
+        showFavoritesSelector,
       ]
     );
 
@@ -103,6 +119,7 @@ export const withSidebarProps = (WrappedComponent) => {
         getNameList={getNameList}
         showSkeleton={showSkeleton}
         totalCount={totalCount}
+        isSelected={isSelected}
       />
     );
   };
@@ -124,6 +141,8 @@ export const withSidebarProps = (WrappedComponent) => {
     searchResultsCountSelector: PropTypes.number.isRequired,
     favoritesCountSelector: PropTypes.number.isRequired,
     favoriteNameListSelector: PropTypes.array.isRequired,
+    selectedFavoriteIndexSelector: PropTypes.number,
+    selectedResultIndexSelector: PropTypes.number,
   };
   return EnhancedComponent;
 };

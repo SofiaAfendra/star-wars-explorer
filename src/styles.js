@@ -6,8 +6,8 @@ export default {
     gridTemplateColumns: "repeat(4, 1fr)",
     gridTemplateAreas: `
         "header header header header"
-        "sidebar main main main"
-        "sidebar main main main" 
+        "sidebar main main ."
+        "sidebar main main ." 
         "footer footer footer footer"
         `,
   },
