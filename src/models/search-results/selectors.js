@@ -10,6 +10,8 @@ export const selectedResultIndexSelector = (state) =>
 
 export const searchingSelector = (state) => state?.searchResults?.searching;
 
+export const filtersSelector = (state) => state?.searchResults?.filters || {};
+
 export const searchResultsCountSelector = createSelector(
   searchResultsSelector,
   (searchResults) => searchResults?.length || 0

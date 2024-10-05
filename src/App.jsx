@@ -1,21 +1,10 @@
-import { useState, useCallback, useRef } from "react";
-import {
-  Box,
-  Typography,
-  Button,
-  Select,
-  MenuItem,
-  TextField,
-  Skeleton,
-  IconButton,
-  Switch,
-  FormControlLabel,
-} from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
+import { useCallback } from "react";
+import PropTypes from "prop-types";
+import { Box, Typography, Button, Skeleton, IconButton } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Virtuoso } from "react-virtuoso";
-import PropTypes from "prop-types";
+import { Header } from "./components";
 import {
   fetchSearchResults,
   nameListSelector,
@@ -26,6 +15,7 @@ import {
   selectedResultSelector,
   searchingSelector,
   searchResultsSelector,
+  filtersSelector,
 } from "./models/search-results";
 import { withModelProps } from "./library/withModelProps";
 import styles from "./styles";
@@ -47,7 +37,6 @@ function App({
   nameListSelector,
   searchResultsCountSelector,
   nextPageSelector,
-  clearSearchResults,
   setSelectedResult,
   selectedResultSelector,
   searchingSelector,
@@ -55,35 +44,14 @@ function App({
   searchResultsSelector,
   isFavoriteSelector,
   removeFavorite,
-  setShowFavorites,
   showFavoritesSelector,
   favoriteNameListSelector,
   favoritesCountSelector,
   favoritesSelector,
   setSelectedFavorite,
   selectedFavoriteSelector,
+  filtersSelector: { option, searchText },
 }) {
-  const [option, setOption] = useState("people");
-  const [searchText, setSearchText] = useState("");
-  const prevOptionRef = useRef();
-  const prevSearchTextRef = useRef();
-
-  const handleChange = (event) => {
-    setOption(event.target.value);
-  };
-
-  const handleSearch = (event) => {
-    const newSearchText = event.target.value.trim();
-    setSearchText(newSearchText);
-  };
-
-  const handleClick = () => {
-    clearSearchResults();
-    fetchSearchResults({ option, searchText, page: "1" });
-    prevOptionRef.current = option;
-    prevSearchTextRef.current = searchText;
-  };
-
   const loadMore = useCallback(() => {
     if (nextPageSelector) {
       fetchSearchResults({ option, searchText, page: nextPageSelector });
@@ -99,48 +67,7 @@ function App({
 
   return (
     <Box component="section" sx={styles.root}>
-      <Box component="header" sx={styles.header}>
-        <Typography variant="h1" align="center" sx={styles.heading}>
-          Star Wars Explorer
-        </Typography>
-        <Box component="nav" sx={styles.nav}>
-          <Select
-            sx={{ minWidth: "120px" }}
-            value={option}
-            onChange={handleChange}
-          >
-            <MenuItem value="people">People</MenuItem>
-            <MenuItem value="films">Films</MenuItem>
-            <MenuItem value="starships">Starships</MenuItem>
-            <MenuItem value="vehicles">Vehicles</MenuItem>
-            <MenuItem value="species">Species</MenuItem>
-            <MenuItem value="planets">Planets</MenuItem>
-          </Select>
-          <TextField
-            slotProps={{
-              input: {
-                endAdornment: <SearchIcon />,
-              },
-            }}
-            onChange={handleSearch}
-          />
-          <Button
-            variant="contained"
-            onClick={handleClick}
-            disabled={
-              option === prevOptionRef.current &&
-              searchText === prevSearchTextRef.current
-            }
-          >
-            Search
-          </Button>
-          <FormControlLabel
-            control={<Switch checked={showFavoritesSelector} />}
-            label="Show Favorites"
-            onChange={() => setShowFavorites()}
-          />
-        </Box>
-      </Box>
+      <Header />
       <Box component="main" sx={styles.main}>
         {showFavoritesSelector ? (
           selectedFavoriteSelector ? (
@@ -250,6 +177,7 @@ App.propTypes = {
   favoritesSelector: PropTypes.array,
   setSelectedFavorite: PropTypes.func,
   selectedFavoriteSelector: PropTypes.object,
+  filtersSelector: PropTypes.object.isRequired,
 };
 
 const AppWithModelProps = withModelProps({
@@ -272,6 +200,7 @@ const AppWithModelProps = withModelProps({
   favoritesSelector,
   setSelectedFavorite,
   selectedFavoriteSelector,
+  filtersSelector,
 })(App);
 
 export default AppWithModelProps;

@@ -5,5 +5,9 @@ export const fetchSearchResults = createAction(
   "searchResults/fetchSearchResults"
 );
 
-export const { setSearchResults, clearSearchResults, setSelectedResult } =
-  searchResultsSlice.actions;
+export const {
+  setSearchResults,
+  clearSearchResults,
+  setSelectedResult,
+  setFilters,
+} = searchResultsSlice.actions;

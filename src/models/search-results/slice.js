@@ -6,6 +6,7 @@ export const initialState = {
   next: "",
   searching: false,
   selectedResult: 0,
+  filters: {},
 };
 
 export const searchResultsSlice = createSlice({
@@ -25,6 +26,9 @@ export const searchResultsSlice = createSlice({
     },
     setSelectedResult(state, action) {
       state.selectedResult = action.payload;
+    },
+    setFilters(state, action) {
+      state.filters = action.payload;
     },
   },
   extraReducers: (builder) => {
