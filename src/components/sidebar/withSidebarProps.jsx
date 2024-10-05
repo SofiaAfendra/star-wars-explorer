@@ -1,4 +1,5 @@
 import { useCallback } from "react";
+import { useMediaQuery } from "@mui/material";
 import PropTypes from "prop-types";
 
 export const withSidebarProps = (WrappedComponent) => {
@@ -23,6 +24,8 @@ export const withSidebarProps = (WrappedComponent) => {
       selectedFavoriteIndexSelector,
       selectedResultIndexSelector,
     } = props;
+
+    const isMobile = useMediaQuery("(max-width:600px)");
 
     const showSkeleton = searchingSelector && nameListSelector.length === 0;
 
@@ -120,6 +123,7 @@ export const withSidebarProps = (WrappedComponent) => {
         showSkeleton={showSkeleton}
         totalCount={totalCount}
         isSelected={isSelected}
+        isMobile={isMobile}
       />
     );
   };
@@ -130,7 +134,10 @@ export const withSidebarProps = (WrappedComponent) => {
     setSelectedResult: PropTypes.func.isRequired,
     setSelectedFavorite: PropTypes.func.isRequired,
     showFavoritesSelector: PropTypes.bool.isRequired,
-    filtersSelector: PropTypes.object.isRequired,
+    filtersSelector: PropTypes.shape({
+      option: PropTypes.string,
+      searchText: PropTypes.string,
+    }).isRequired,
     addFavorite: PropTypes.func.isRequired,
     removeFavorite: PropTypes.func.isRequired,
     isFavoriteSelector: PropTypes.func.isRequired,
@@ -141,8 +148,8 @@ export const withSidebarProps = (WrappedComponent) => {
     searchResultsCountSelector: PropTypes.number.isRequired,
     favoritesCountSelector: PropTypes.number.isRequired,
     favoriteNameListSelector: PropTypes.array.isRequired,
-    selectedFavoriteIndexSelector: PropTypes.number,
-    selectedResultIndexSelector: PropTypes.number,
+    selectedFavoriteIndexSelector: PropTypes.number.isRequired,
+    selectedResultIndexSelector: PropTypes.number.isRequired,
   };
   return EnhancedComponent;
 };

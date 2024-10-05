@@ -12,11 +12,19 @@ export default {
     color: "#FFD700",
     fontSize: "3rem",
     p: 2,
+    display: {
+      xs: "none",
+      sm: "block",
+    },
   },
   filters: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     gap: 2,
+    flexWrap: {
+      xs: "wrap",
+      sm: "nowrap",
+    },
   },
 };

@@ -40,10 +40,11 @@ const Sidebar = ({
   totalCount,
   getNameList,
   isSelected,
+  isMobile,
 }) => (
   <Box component="aside" sx={styles.sidebar}>
     {showSkeleton ? (
-      Array(10)
+      Array(isMobile ? 5 : 10)
         .fill(null)
         .map((_, index) => (
           <Skeleton key={index} variant="text" sx={styles.skeleton} />
@@ -75,22 +76,7 @@ const Sidebar = ({
 );
 
 Sidebar.propTypes = {
-  fetchSearchResults: PropTypes.func.isRequired,
-  nameListSelector: PropTypes.array.isRequired,
-  searchResultsCountSelector: PropTypes.number.isRequired,
-  nextPageSelector: PropTypes.string,
-  setSelectedResult: PropTypes.func.isRequired,
-  searchingSelector: PropTypes.bool.isRequired,
-  addFavorite: PropTypes.func.isRequired,
-  searchResultsSelector: PropTypes.array.isRequired,
   isFavoriteSelector: PropTypes.func.isRequired,
-  removeFavorite: PropTypes.func.isRequired,
-  showFavoritesSelector: PropTypes.bool,
-  favoriteNameListSelector: PropTypes.array.isRequired,
-  favoritesCountSelector: PropTypes.number.isRequired,
-  favoritesSelector: PropTypes.array,
-  setSelectedFavorite: PropTypes.func,
-  filtersSelector: PropTypes.object.isRequired,
   handleLinkClick: PropTypes.func.isRequired,
   loadMore: PropTypes.func.isRequired,
   handleFavoriteClick: PropTypes.func.isRequired,
@@ -98,9 +84,8 @@ Sidebar.propTypes = {
   showSkeleton: PropTypes.bool.isRequired,
   totalCount: PropTypes.number.isRequired,
   getNameList: PropTypes.func.isRequired,
-  selectedFavoriteIndexSelector: PropTypes.number,
-  selectedResultIndexSelector: PropTypes.number,
   isSelected: PropTypes.func.isRequired,
+  isMobile: PropTypes.bool.isRequired,
 };
 
 const ComposedSidebar = compose(

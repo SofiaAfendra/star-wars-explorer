@@ -10,7 +10,7 @@ export default {
   container: {
     overflowWrap: "break-word",
     p: 2,
-    "&:nth-child(odd)": {
+    "&:nth-of-type(odd)": {
       backgroundColor: "#f0f0f0",
     },
   },

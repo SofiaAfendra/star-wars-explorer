@@ -14,6 +14,16 @@ const UISetup = ({ children }) => (
             padding: 0,
             boxSizing: "border-box",
           },
+          "@media (max-width:480px)": {
+            html: {
+              fontSize: "12px",
+            },
+          },
+          "@media (max-width:600px)": {
+            html: {
+              fontSize: "14px",
+            },
+          },
         }}
       />
       <CssBaseline />
