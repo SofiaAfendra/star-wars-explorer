@@ -1,27 +1,17 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { createEpicMiddleware } from "redux-observable";
-import {
-  fetchSearchResultsEpic,
-  initialState as searchInitialState,
-} from "../models/search-results";
-import { initialState as favoritesInitialState } from "../models/favorites";
-import { initialState as snackbarInitialState } from "../models/snackbar";
 import { combinedReducers } from "./rootReducer";
+import { fetchSearchResultsEpic } from "../models/search-results";
+import { initialState as favoritesInitialState } from "../models/favorites";
 import { persistState } from "../library/persistState";
 
 const epicMiddleware = createEpicMiddleware();
-
-const preloadedState = {
-  searchResults: searchInitialState,
-  snackbar: snackbarInitialState,
-};
 
 const createStore = () => {
   const { initialState, persistStateMiddleware } = persistState("favorites");
 
   const store = configureStore({
     preloadedState: {
-      ...preloadedState,
       favorites: Object.keys(initialState).length
         ? initialState
         : favoritesInitialState,

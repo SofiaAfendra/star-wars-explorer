@@ -1,6 +1,6 @@
 import { createSelector } from "reselect";
 
-export const favoritesSelector = (state) => state?.favorites?.favorites || [];
+export const favoritesSelector = (state) => state?.favorites?.favorites;
 
 export const showFavoritesSelector = (state) => state?.favorites?.showFavorites;
 

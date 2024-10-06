@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, memo } from "react";
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import { bindActionCreators } from "redux";
 
@@ -19,15 +19,12 @@ const stateProps = (props, ownProps) => (state) =>
 export const withModelProps = (props) => (WrappedComponent) => {
   const EnhancedComponent = (componentProps) => {
     const dispatch = useDispatch();
-    // Add 'shallowEqual' to useSelector to prevent unnecessary re-renders of components
-    // https://react-redux.js.org/api/hooks#equality-comparisons-and-updates
+
     const mappedStateProps = useSelector(
       stateProps(props, componentProps),
       shallowEqual
     );
 
-    // Add 'useMemo' to prevent the bound action creators from being re-created on every render
-    // https://redux.js.org/api/bindactioncreators
     const boundActionProps = useMemo(
       () => bindActionCreators(actionProps(props), dispatch),
       [dispatch]
@@ -42,5 +39,5 @@ export const withModelProps = (props) => (WrappedComponent) => {
     );
   };
 
-  return EnhancedComponent;
+  return memo(EnhancedComponent);
 };

@@ -1,12 +1,9 @@
 import { snackbarReducer, snackbarSliceName } from "../models/snackbar";
+import { favoritesReducer, favoritesSliceName } from "../models/favorites";
 import {
   searchResultsReducer,
   searchResultsSliceName,
 } from "../models/search-results";
-import {
-  favoritesReducer,
-  favoritesSliceName,
-} from "../models/favorites/slice";
 
 export const combinedReducers = {
   [snackbarSliceName]: snackbarReducer,
